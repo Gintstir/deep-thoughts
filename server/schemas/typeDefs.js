@@ -23,12 +23,14 @@ const typeDefs = gql`
         reactionCount: Int
         reactions: [Reaction]
     }
+
     type Reaction {
         _id: ID
         reactionBody: String
         createdAt: String
         username: String
     }
+
     type User {
         _id: ID
         username: String
@@ -37,13 +39,29 @@ const typeDefs = gql`
         thoughts: [Thought]
         friends: [User]
     }
+
+    type Auth {
+        token: ID!
+        user: User
+    }
+
     type Query {
+        me: User
         users: [User]
         user(username: String!): User
 
         thoughts(username: String): [Thought]
         thought(_id: ID!): Thought
     }
+
+    type Mutation {
+        login(email: String!, password: String!): Auth
+        addUser(username: String!, email: String!, password: String!): Auth
+        addThought(thoughtText: String!): Thought
+        addReaction(thoughtId: ID!, reactionBody: String!): Thought
+        addFriend(friendId: ID!): User
+    }
+
 `;
 //we've defined our thoughts query that it could receive a parameter if we wanted
 //in this case the parameter would be identified as username and would have string datatype
