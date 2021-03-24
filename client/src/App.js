@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+import Home from './pages/Home';
+
+//with this code we establish a new connection to the GraphQl server using Apollo.  
+const client = new ApolloClient({
+  uri: '/graphql'
+})
+//uri: 'http://localhost:3001/graphql we used the absolute path before to test the route 
+//but we can't use that in production.
+
+
+//passing the client variable in as the value for the client prop in the provider.  
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ApolloProvider client={client}>
+      <div className='flex-column justify-flex-start min-100-vh'>
+        <Header />
+        <div className='container'>
+          <Home />
+        </div>
+        <Footer />
     </div>
+    </ApolloProvider>
   );
 }
 
