@@ -21,10 +21,23 @@ import Signup from './pages/Signup';
 
 //with this code we establish a new connection to the GraphQl server using Apollo.  
 const client = new ApolloClient({
+  request: operation => {
+    const token = localStorage.getItem('id_token');
+
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    });
+  },
   uri: '/graphql'
-})
+});
 //uri: 'http://localhost:3001/graphql we used the absolute path before to test the route 
 //but we can't use that in production.
+
+//with this request config we use the .setContext() method to set the HTTP request headers of ecery request
+//to include the toke, whether ther request needs it or not.  If thie request doesnt need the toke, our
+//server side resolber function wont check for it
 
 
 //passing the client variable in as the value for the client prop in the provider.  
