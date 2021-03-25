@@ -1,4 +1,5 @@
 import React from 'react';
+import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList'
 
 //importing the useQuery hook from Apollo's react hooks library- this will allow us to make 
@@ -11,6 +12,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { QUERY_THOUGHTS, QUERY_ME_BASIC } from '../utils/queries';
 import Auth from '../utils/auth';
 import FriendList from '../components/FriendList';
+
 
 
 const Home = () => {
@@ -33,8 +35,13 @@ const Home = () => {
       <div className='flex-row justify-space-between'>
         {/* Here we are conditionally defining the laout for this <div> If the user isnt logged in
         itll span the the full width if the row.  If logged in itll only span 8 cols leaving space for
-        a four col <div> on the rioghjt side*/}
-
+        a four col <div> on the rioghjt side*/}        
+        {loggedIn && (
+          <div className="col-12 mb-3">
+            <ThoughtForm />
+          </div>
+          )}
+        
         
         <div className={`col-12 mb-3' ${loggedIn && 'col-lg-8'}`}>
           {loading ? (
